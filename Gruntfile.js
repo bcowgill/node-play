@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 			gruntfile: {
 				options: {
 					jshintrc: '.jshintrc-gruntfile',
-					globals: {},
+					globals: {}
 				},
 				src: ['package.json', 'Gruntfile.js']
 			},
@@ -57,6 +57,10 @@ module.exports = function(grunt) {
 				src: ['lib/**/*.js', 'lib/jsdoc-templates/*.jsdoc']
 			},
 			test: {
+				options: {
+					jshintrc: '.jshintrc-mocha-chai-sinon',
+					globals: {}
+				},
 				src: ['test/**/*.js']
 			}
 		},
@@ -111,7 +115,7 @@ module.exports = function(grunt) {
 		watch: {
 			gruntfile: {
 				files: '<%= jshint.gruntfile.src %>',
-				tasks: ['jshint:gruntfile']
+				tasks: ['jshint:gruntfile', 'test']
 			},
 			lib: {
 				files: '<%= jshint.lib.src %>',

@@ -9,12 +9,13 @@
 	"smarttabs": true,
 	"maxparams": 3,
 	"maxdepth": 2,
-	"maxstatements": 11,
-	"maxcomplexity": 4,
+	"maxstatements": 22,
+	"maxcomplexity": 1,
 	"maxlen": 100,
 	"bitwise": true,
 	"curly": true,
 	"eqeqeq": true,
+	"expr": true, // to allow expect().to.be.null
 	"forin": true,
 	"freeze": true,
 	"immed": true,
@@ -32,5 +33,9 @@
 	"laxcomma": true,
 	"laxbreak": true,
 	"multistr": true,
-	"maxerr": 5000
+	"maxerr": 5000,
+	"globals": {
+		"describe": true,
+		"it": true
+	}
 }

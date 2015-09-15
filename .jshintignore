@@ -2,4 +2,3 @@
 dist/**/*-bundle.js
 lib/3rdparty/**/*.js
 node_modules/**/*.js
-lib/jsdoc-examples/**/*.js

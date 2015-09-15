@@ -60,9 +60,6 @@ module.exports = function(grunt) {
 				src: ['test/**/*.js']
 			}
 		},
-		nodeunit: {
-			files: ['test/**/*-test.js'],
-		},
 		/**
 			Running tests in the console using mocha/chai.
 			@see {@link https://github.com/thepeg/grunt-mocha-chai-sinon Grunt plugin for mocha, chai, and sinon}
@@ -71,7 +68,7 @@ module.exports = function(grunt) {
 		*/
 		'mocha-chai-sinon': {
 			test: {
-				src: ['./test/**/*-test.js'],
+				src: ['./test/**/*.spec.js'],
 				options: {
 					ui: 'bdd',
 					// spec, list, tap, nyan, progress, dot, min, landing, doc, markdown, html-cov, json-cov, json, json-stream, xunit
@@ -118,18 +115,17 @@ module.exports = function(grunt) {
 			},
 			lib: {
 				files: '<%= jshint.lib.src %>',
-				tasks: ['jshint:lib', 'nodeunit']
+				tasks: ['jshint:lib', 'test']
 			},
 			test: {
 				files: '<%= jshint.test.src %>',
-				tasks: ['jshint:test', 'nodeunit']
+				tasks: ['jshint:test', 'test']
 			}
 		}
 	});
 
 	// These plugins provide necessary tasks.
 	[
-		//'grunt-contrib-nodeunit');
 		'grunt-contrib-clean',
 		'grunt-contrib-jshint',
 		'grunt-jsdoc',
@@ -144,7 +140,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('all', ['windows', 'docs', 'test']);
 	grunt.registerTask('docs', ['clean:jsdoc', 'jsdoc']);
 	grunt.registerTask('test', [
-		//'nodeunit'
 		'mocha-chai-sinon'
 	]);
 	grunt.registerTask('windows', [

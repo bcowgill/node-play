@@ -1,20 +1,21 @@
 {
-  "name": "perljs",
-  "version": "0.2.2",
-  "description": "Perl for Javascript. Just some functions that a perl developer misses in Javascript.",
-  "main": "perl.js",
+  "private": true,
+  "name": "node-play",
+  "version": "0.0.1",
+  "description": "Playing around with node and express",
+  "main": "app.js",
   "scripts": {
-    "docs": "jsdoc --destination doc --recurse test/ lib/perl.js",
+    "docs": "jsdoc --destination doc --recurse test/ app.js",
     "test": "mocha --reporter tap"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bcowgill/perljs.git"
+    "url": "https://github.com/bcowgill/node-play.git"
   },
   "keywords": [
-    "perl"
+    "node", "express"
   ],
-  "author": "Brent Cowgill <brent@blismedia.com> (http://github.com/bcowgill)",
+  "author": "Brent Cowgill <brent.cowgill@workshare.com> (http://github.com/bcowgill)",
   "licenses": [
     {
       "type": "The Unlicense",
@@ -22,9 +23,9 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/bcowgill/perljs/issues"
+    "url": "https://github.com/bcowgill/node-play/issues"
   },
-  "homepage": "https://github.com/bcowgill/perljs",
+  "homepage": "https://github.com/bcowgill/node-play",
   "devDependencies": {
     "mocha": "^1.20.1",
     "chai": "^1.9.1",

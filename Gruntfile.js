@@ -8,6 +8,8 @@
 	Grunt build configuration.
 
  	@example
+ 	grunt all watch --reporter landing --force
+
  	# jshint check a single file
  	grunt jshint:single --check-file filename.js
 

@@ -1,0 +1,14 @@
+.gitignore
+lib/perl.js
+test
+perl
+doc
+scripts
+Makefile
+Gruntfile.js
+.jshint*
+jsdoc.conf.json
+*.txt
+*.bak
+*.sublime-*
+*.timestamp

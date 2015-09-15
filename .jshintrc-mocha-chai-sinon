@@ -1,4 +1,4 @@
-// jshint warning codes are in:
+// warning codes for jshint are in:
 // node_modules/grunt-contrib-jshint/node_modules/jshint/src/messages.js
 {
 	"node": true,
@@ -35,7 +35,14 @@
 	"multistr": true,
 	"maxerr": 5000,
 	"globals": {
-		"describe": true,
-		"it": true
+		"after": false,
+		"afterEach": false,
+		"before": false,
+		"beforeEach": false,
+		"describe": false,
+		"expect": false,
+		"it": false,
+		"xdescribe": false,
+		"xit": false
 	}
 }

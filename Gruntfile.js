@@ -47,7 +47,7 @@ module.exports = function(grunt) {
 					jshintrc: '.jshintrc-gruntfile',
 					globals: {}
 				},
-				src: ['package.json', 'Gruntfile.js']
+				src: ['package.json', '.jshintrc*', 'Gruntfile.js']
 			},
 			single: {
 				// grunt jshint:single --check-file filename

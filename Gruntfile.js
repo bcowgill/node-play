@@ -7,6 +7,13 @@
 	@description
 	Grunt build configuration.
 
+ 	@example
+ 	# jshint check a single file
+ 	grunt jshint:single --check-file filename.js
+
+ 	# run tests with a chosen reporter style
+ 	grunt test --reporter spec
+
 	@see {@link http://usejsdoc.org/ JSDoc Documentation}
 */
 
@@ -76,7 +83,7 @@ module.exports = function(grunt) {
 				options: {
 					ui: 'bdd',
 					// spec, list, tap, nyan, progress, dot, min, landing, doc, markdown, html-cov, json-cov, json, json-stream, xunit
-					reporter: 'tap',
+					reporter: grunt.option('reporter') || 'spec',
 					bail: false, // true to bail after first test failure
 					//grep: '.*', // invert: true, // filter to run subset of tests
 					sort: true, // sort order of test files

@@ -40,7 +40,7 @@
 		"before": false,
 		"beforeEach": false,
 		"describe": false,
-		"expect": false,
+		"expect": true,
 		"it": false,
 		"xdescribe": false,
 		"xit": false

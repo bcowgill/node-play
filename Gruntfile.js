@@ -100,12 +100,15 @@ module.exports = function(grunt) {
 			}
 		},
 		/**
-			 Generate code coverage reports using istanbul.
-			 @see {@link https://www.npmjs.com/package/grunt-mocha-istanbul Grunt plugin for mocha istanbul coverage}
-			 @see {@link http://gotwarlost.github.io/istanbul/ istanbul documentation}
-			 @see {@link http://tbusser.net/articles/js-unit-testing-part-02/#disqus_thread coverage under the hood}
+			Generate code coverage reports using istanbul.
+			@see {@link https://www.npmjs.com/package/grunt-mocha-istanbul Grunt plugin for mocha istanbul coverage}
+			@see {@link http://gotwarlost.github.io/istanbul/ istanbul documentation}
+		 	@see {@link https://github.com/nickmerwin/node-coveralls coveralls documentation}
+			@see {@link http://tbusser.net/articles/js-unit-testing-part-02/#disqus_thread coverage under the hood}
 		 */
 		mocha_istanbul: {
+			// use your browser to view this url for coverage report
+			coverageUrl: '<%= mocha_istanbul.coverage.options.coverageFolder %>/index.html',
 			coverage: {
 				src: '<%= jshint.test.spec %>',
 				options: {
@@ -131,8 +134,20 @@ module.exports = function(grunt) {
 					}
 				}
 			},
-			// use your browser to view this url for coverage report
-			coverageUrl: '<%= mocha_istanbul.coverage.options.coverageFolder %>/index.html'
+			coveralls: {
+				src: '<%= jshint.test.spec %>',
+				options: {
+					coverage: true, // this will make the grunt.event.on('coverage') event listener to be triggered
+					check: {
+						functions:   75,
+						branches:    75,
+						lines:       75,
+						statements:  75
+					},
+					root: './lib', // define where the cover task should consider the root of libraries that are covered by tests
+					reportFormats: ['cobertura','lcovonly']
+				}
+			}
 		},
 
 		/**
@@ -187,6 +202,12 @@ module.exports = function(grunt) {
 		grunt.loadNpmTasks(task);
 	});
 
+	// Important not to remove this if coveralls.options.coverage:true or grunt will hang
+	grunt.event.on('coverage', function (lcovFileContents, done) {
+		void lcovFileContents;
+		done();
+	});
+
 	// Default task.
 	grunt.registerTask('default', ['all']);
 	grunt.registerTask('all', ['windows', 'docs', 'coverage']);
@@ -198,6 +219,9 @@ module.exports = function(grunt) {
 	]);
 	grunt.registerTask('coverage', [
 		'mocha_istanbul:coverage'
+	]);
+	grunt.registerTask('coveralls', [
+		'mocha_istanbul:coveralls'
 	]);
 	grunt.registerTask('windows', [
 		'jshint:gruntfile',

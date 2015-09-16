@@ -7,7 +7,7 @@
   "scripts": {
     "docs": "jsdoc --destination doc --recurse test/ app.js",
     "test": "mocha --reporter tap",
-    "coverage-view": "chromium-browser coverage/lcov-report/index.html"
+    "coverage-view": "chromium-browser doc/coverage/index.html"
   },
   "repository": {
     "type": "git",

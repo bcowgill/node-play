@@ -83,11 +83,11 @@ module.exports = function(grunt) {
 		*/
 		'mocha-chai-sinon': {
 			test: {
-				src: ['./test/**/*.spec.js'],
+				src: '<%= jshint.test.spec %>',
 				options: {
-					ui: 'bdd',
+					ui:  '<%= mocha_istanbul.coverage.options.ui %>',
 					// spec, list, tap, nyan, progress, dot, min, landing, doc, markdown, html-cov, json-cov, json, json-stream, xunit
-					reporter: grunt.option('reporter') || 'spec',
+					reporter:  '<%= mocha_istanbul.coverage.options.reporter %>',
 					bail: false, // true to bail after first test failure
 					//grep: '.*', // invert: true, // filter to run subset of tests
 					sort: true, // sort order of test files
@@ -108,10 +108,31 @@ module.exports = function(grunt) {
 		mocha_istanbul: {
 			coverage: {
 				src: '<%= jshint.test.spec %>',
-				options: {}
+				options: {
+					dryRun: false, // to debug the istanbul command line
+					coverageFolder: 'doc/coverage',
+					excludes: [],  // use istanbul help cover to see how excludes work
+					reportFormats: [
+						// html, lcovonly, lcov, cobertura, text-summary, text, teamcity
+						'html',
+						'text'
+					],
+
+					// Mocha options
+					reporter: grunt.option('reporter') || 'spec',
+					ui: 'bdd',
+
+					// check percentage coverage to be a good build
+					check: {
+						functions:   95,
+						branches:    80,
+						lines:       85,
+						statements:  85
+					}
+				}
 			},
 			// use your browser to view this url for coverage report
-			coverageUrl: 'coverage/lcov-report/index.html'
+			coverageUrl: '<%= mocha_istanbul.coverage.options.coverageFolder %>/index.html'
 		},
 
 		/**
@@ -141,15 +162,15 @@ module.exports = function(grunt) {
 		watch: {
 			gruntfile: {
 				files: '<%= jshint.gruntfile.src %>',
-				tasks: ['jshint:gruntfile', 'test']
+				tasks: ['jshint:gruntfile', 'coverage']
 			},
 			lib: {
 				files: '<%= jshint.lib.src %>',
-				tasks: ['jshint:lib', 'test', 'coverage']
+				tasks: ['jshint:lib', 'coverage']
 			},
 			test: {
 				files: '<%= jshint.test.src %>',
-				tasks: ['jshint:test', 'test', 'coverage']
+				tasks: ['jshint:test', 'coverage']
 			}
 		}
 	});
@@ -168,7 +189,7 @@ module.exports = function(grunt) {
 
 	// Default task.
 	grunt.registerTask('default', ['all']);
-	grunt.registerTask('all', ['windows', 'docs', 'test', 'coverage']);
+	grunt.registerTask('all', ['windows', 'docs', 'coverage']);
 	grunt.registerTask('docs', ['clean:jsdoc', 'jsdoc']);
 	grunt.registerTask('test', [
 		// hyphens in name make the config section annoying

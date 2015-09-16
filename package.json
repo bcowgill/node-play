@@ -9,7 +9,8 @@
     "test": "mocha --reporter tap",
     "coverage-view": "chromium-browser doc/coverage/index.html",
     "doc-view": "chromium-browser doc/index.html",
-    "docs-view": "chromium-browser doc/index.html"
+    "docs-view": "chromium-browser doc/index.html",
+    "edit": "subl Gruntfile.js `find lib/ test/ -type f`"
   },
   "repository": {
     "type": "git",

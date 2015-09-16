@@ -20,6 +20,7 @@ package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon
   grunt all watch --reporter landing
   npm run-script coverage-view
   npm run-script doc-view
+  npm run-script edit
 ```
 
 ## Tests

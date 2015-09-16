@@ -9,12 +9,13 @@ package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon
 
 ```bash
   git clone https://github.com/bcowgill/node-play.git
+  cd node-play
+  npm install
 ```
 
 ## Usage
 
 ```bash
-  npm install
   grunt jshint:single --check-file lib/single-file.js
   grunt all watch --reporter landing
   npm run-script coverage-view

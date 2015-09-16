@@ -8,7 +8,7 @@
 	Grunt build configuration.
 
  	@example
- 
+
  	# build all, then watch for changes use the airplane test reporter
  	grunt all watch --reporter landing --force
 

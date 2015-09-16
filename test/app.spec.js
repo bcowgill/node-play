@@ -36,7 +36,7 @@ describe("app api tests", function ()
             .end(fnAsyncDone);
     });
 
-    it("returns location information as JSON", function (fnAsyncDone)
+    it.skip("returns location information as JSON", function (fnAsyncDone)
     {
 
         // Act

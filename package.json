@@ -5,9 +5,11 @@
   "description": "Playing around with node and express",
   "main": "app.js",
   "scripts": {
-    "docs": "jsdoc --destination doc --recurse test/ app.js",
+    "docs": "jsdoc --destination doc --recurse test/ lib/ Gruntfile.js README.md",
     "test": "mocha --reporter tap",
-    "coverage-view": "chromium-browser doc/coverage/index.html"
+    "coverage-view": "chromium-browser doc/coverage/index.html",
+    "doc-view": "chromium-browser doc/index.html",
+    "docs-view": "chromium-browser doc/index.html"
   },
   "repository": {
     "type": "git",

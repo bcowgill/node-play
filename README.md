@@ -29,6 +29,11 @@ package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon
   grunt test --reporter nyan
 ```
 
+## Todo
+
+- use supertests to spec the location microservice api
+- write code to implement the api
+
 ## Contributing
 
 In lieu of a formal styleguide, take care to maintain the existing coding style.

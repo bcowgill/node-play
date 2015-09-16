@@ -32,8 +32,9 @@ package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon
 
 ## Todo
 
-- use supertests to spec the location microservice api
+- in progress - use supertests to spec the location microservice api
 - write code to implement the api
+- grunt run script plugin
 
 ## Contributing
 

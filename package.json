@@ -6,14 +6,23 @@
   "main": "app.js",
   "scripts": {
     "docs": "jsdoc --destination doc --recurse test/ app.js",
-    "test": "mocha --reporter tap"
+    "test": "mocha --reporter tap",
+    "coverage-view": "chromium-browser coverage/lcov-report/index.html"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/bcowgill/node-play.git"
   },
   "keywords": [
-    "node", "express"
+    "tutorial",
+    "example",
+    "node",
+    "express",
+    "jshint",
+    "mocha",
+    "chai",
+    "istanbul",
+    "coverage"
   ],
   "author": "Brent Cowgill <brent.cowgill@workshare.com> (http://github.com/bcowgill)",
   "licenses": [
@@ -35,6 +44,8 @@
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-jsdoc": "~0.5.6",
     "grunt-mocha-chai-sinon": "0.0.8",
-    "grunt-contrib-watch": "~0.6.1"
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-mocha-istanbul": "^3.0.1",
+    "istanbul": "^0.3.20"
   }
 }

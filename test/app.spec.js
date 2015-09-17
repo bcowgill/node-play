@@ -1,6 +1,12 @@
 /* jshint maxcomplexity: 2 */
 "use strict";
 
+/**
+ * application api test suite
+ * @file
+ * @see {@link https://github.com/visionmedia/supertest#readme supertest api documentation}
+ * */
+
 var app = require("../lib/app"),
     supertest = require("supertest"),
     textShouldBe = function(expected) {

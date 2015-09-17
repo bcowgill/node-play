@@ -12,6 +12,9 @@
  	# build all, then watch for changes use the airplane test reporter
  	grunt all watch --reporter landing --force
 
+ 	# watch file changes to rerun tests and also build the documentation
+ 	grunt watch --also jsdoc
+
  	# jshint check a single file
  	grunt jshint:single --check-file filename.js
 
@@ -28,7 +31,7 @@
 module.exports = function(grunt) {
 	'use strict';
 
-	var jsdoc = grunt.option('jsdoc') || [];
+	var also = grunt.option('also') || [];
 
 	// Project configuration.
 	grunt.initConfig({
@@ -181,15 +184,15 @@ module.exports = function(grunt) {
 		watch: {
 			gruntfile: {
 				files: '<%= jshint.gruntfile.src %>',
-				tasks: ['jshint:gruntfile', 'coverage', jsdoc]
+				tasks: ['jshint:gruntfile', 'coverage', also]
 			},
 			lib: {
 				files: '<%= jshint.lib.src %>',
-				tasks: ['jshint:lib', 'coverage', jsdoc]
+				tasks: ['jshint:lib', 'coverage', also]
 			},
 			test: {
 				files: '<%= jshint.test.src %>',
-				tasks: ['jshint:test', 'coverage', jsdoc]
+				tasks: ['jshint:test', 'coverage', also]
 			}
 		}
 	});

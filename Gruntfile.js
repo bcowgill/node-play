@@ -28,6 +28,8 @@
 module.exports = function(grunt) {
 	'use strict';
 
+	var jsdoc = grunt.option('jsdoc') || [];
+
 	// Project configuration.
 	grunt.initConfig({
 		// Metadata.
@@ -179,15 +181,15 @@ module.exports = function(grunt) {
 		watch: {
 			gruntfile: {
 				files: '<%= jshint.gruntfile.src %>',
-				tasks: ['jshint:gruntfile', 'coverage']
+				tasks: ['jshint:gruntfile', 'coverage', jsdoc]
 			},
 			lib: {
 				files: '<%= jshint.lib.src %>',
-				tasks: ['jshint:lib', 'coverage']
+				tasks: ['jshint:lib', 'coverage', jsdoc]
 			},
 			test: {
 				files: '<%= jshint.test.src %>',
-				tasks: ['jshint:test', 'coverage']
+				tasks: ['jshint:test', 'coverage', jsdoc]
 			}
 		}
 	});

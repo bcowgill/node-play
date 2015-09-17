@@ -51,4 +51,6 @@ describe("app api tests", function ()
             .expect(200)
             .end(fnAsyncDone);
     });
+    it("ipv4/6 and commas");
+    it("unrecognized host format");
 });

@@ -18,7 +18,7 @@ var app = require("../lib/app"),
         };
     };
 
-describe("app api tests", function ()
+describe("app api /ping/ tests", function ()
 {
     beforeEach(function () {
         this.response = supertest(app)
@@ -41,22 +41,86 @@ describe("app api tests", function ()
             .expect(textShouldBe("pong"))
             .end(fnAsyncDone);
     });
+});
 
-    it.skip("returns location information as JSON", function (fnAsyncDone)
-    {
-
-        // Act
-        var test = supertest(app)
-            .get("/countries.json/1.2.3.4")
+describe("app api /countries.json", function ()
+{
+    beforeEach(function () {
+        this.response = supertest(app)
             .set("User-Agent", "test app.spec.js")
             .set("Accept", "text/plain");
+    });
 
-        // Assert
-        test
+    it.skip("returns error for private ip address", function (fnAsyncDone)
+    {
+        this.response
+            .get("/countries.json/192.168.0.2")
+
+        this.response
+            .expect("Content-Type", /application\/json/)
+            .expect(404)
+            .end(fnAsyncDone);
+    });
+
+    it.skip("returns error for non-ip address", function (fnAsyncDone)
+    {
+        this.response
+            .get("/countries.json/google.com")
+
+        this.response
+            .expect("Content-Type", /text\/plain/)
+            .expect(404)
+            .end(fnAsyncDone);
+    });
+
+    it.skip("returns content type and success code for ip address", function (fnAsyncDone)
+    {
+        this.response
+            .get("/countries.json/82.25.22.100")
+
+        this.response
             .expect("Content-Type", /application\/json/)
             .expect(200)
             .end(fnAsyncDone);
     });
-    it("ipv4/6 and commas");
-    it("unrecognized host format");
+
+    it.skip("returns country name for ip address", function (fnAsyncDone)
+    {
+        var oLocation;
+
+        this.response
+            .get("/countries.json/82.25.22.100")
+
+        oLocation = JSON.parse(this.response.text);
+        expectToMatch(oLocation.country, /^\w+$/);
+
+        this.response.end(fnAsyncDone);
+    });
+
+    it.skip("returns country name for ipv6 address", function (fnAsyncDone)
+    {
+        var oLocation;
+
+        this.response
+            .get("/countries.json/82.25.22.100.12.67")
+
+        oLocation = JSON.parse(this.response.text);
+        expectToMatch(oLocation.country, /^\w+$/);
+
+        this.response.end(fnAsyncDone);
+    });
+
+    it.skip("returns country name for multiple ip addresses", function (fnAsyncDone)
+    {
+        var oLocation;
+
+        this.response
+            .get("/countries.json/82.25.22.100,82.25.22.100.12.67")
+
+        oLocation = JSON.parse(this.response.text);
+        expectToMatch(oLocation.country, /^\w+$/);
+
+        this.response.end(fnAsyncDone);
+    });
+
 });

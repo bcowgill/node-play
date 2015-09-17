@@ -86,41 +86,32 @@ describe("app api /countries.json", function ()
 
     it.skip("returns country name for ip address", function (fnAsyncDone)
     {
-        var oLocation;
-
         this.response
             .get("/countries.json/82.25.22.100")
 
-        oLocation = JSON.parse(this.response.text);
-        expectToMatch(oLocation.country, /^\w+$/);
-
-        this.response.end(fnAsyncDone);
+        this.response
+            .expect(this.response.body.country, /^\w+$/)
+            .end(fnAsyncDone);
     });
 
     it.skip("returns country name for ipv6 address", function (fnAsyncDone)
     {
-        var oLocation;
-
         this.response
             .get("/countries.json/82.25.22.100.12.67")
 
-        oLocation = JSON.parse(this.response.text);
-        expectToMatch(oLocation.country, /^\w+$/);
-
-        this.response.end(fnAsyncDone);
+        this.response
+            .expect(this.response.body.country, /^\w+$/)
+            .end(fnAsyncDone);
     });
 
     it.skip("returns country name for multiple ip addresses", function (fnAsyncDone)
     {
-        var oLocation;
-
         this.response
             .get("/countries.json/82.25.22.100,82.25.22.100.12.67")
 
-        oLocation = JSON.parse(this.response.text);
-        expectToMatch(oLocation.country, /^\w+$/);
-
-        this.response.end(fnAsyncDone);
+        this.response
+            .expect(this.response.body.country, /^\w+$/)
+            .end(fnAsyncDone);
     });
 
 });

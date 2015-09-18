@@ -7,7 +7,12 @@
  * @see {@link https://github.com/visionmedia/supertest#readme supertest api documentation}
  * */
 
+// logging during test runs muck up the output
+process.env.NOLOGGING = "true";
+
 var app = require("../lib/app"),
+    chai = require("chai"),
+    expect = chai.expect,
     supertest = require("supertest"),
     textShouldBe = function(expected) {
         return function (response) {
@@ -17,6 +22,24 @@ var app = require("../lib/app"),
             }
         };
     };
+
+describe("app api /unknown/ tests", function ()
+{
+    beforeEach(function () {
+        this.response = supertest(app)
+            .get("/unknown/")
+            .set("User-Agent", "test app.spec.js")
+            .set("Accept", "text/plain");
+    });
+
+    it("error handler check", function (fnAsyncDone)
+    {
+        this.response
+            .expect("Content-Type", /text\/plain/)
+            .expect(404)
+            .end(fnAsyncDone);
+    });
+});
 
 describe("app api /ping/ tests", function ()
 {
@@ -43,29 +66,32 @@ describe("app api /ping/ tests", function ()
     });
 });
 
+function setupApiCall (ips) {
+    ips = Array.isArray(ips) ? ips : [ips];
+
+    var response = supertest(app)
+        .get("/api/countries.json/" + ips.join(","))
+        .set("User-Agent", "test app.spec.js")
+        .set("Accept", "text/plain");
+
+    return response;
+}
+
 describe("app api /countries.json", function ()
 {
-    beforeEach(function () {
-        this.response = supertest(app)
-            .set("User-Agent", "test app.spec.js")
-            .set("Accept", "text/plain");
-    });
-
-    it.skip("returns error for private ip address", function (fnAsyncDone)
+    it("returns error information for private ip address", function (fnAsyncDone)
     {
-        this.response
-            .get("/countries.json/192.168.0.2")
+        this.response = setupApiCall("192.168.0.2");
 
         this.response
             .expect("Content-Type", /application\/json/)
-            .expect(404)
+            .expect(200)
             .end(fnAsyncDone);
     });
 
     it.skip("returns error for non-ip address", function (fnAsyncDone)
     {
-        this.response
-            .get("/countries.json/google.com")
+        this.response = setupApiCall("google.com");
 
         this.response
             .expect("Content-Type", /text\/plain/)
@@ -75,8 +101,7 @@ describe("app api /countries.json", function ()
 
     it.skip("returns content type and success code for ip address", function (fnAsyncDone)
     {
-        this.response
-            .get("/countries.json/82.25.22.100")
+        this.response = setupApiCall("82.25.22.100");
 
         this.response
             .expect("Content-Type", /application\/json/)
@@ -86,8 +111,7 @@ describe("app api /countries.json", function ()
 
     it.skip("returns country name for ip address", function (fnAsyncDone)
     {
-        this.response
-            .get("/countries.json/82.25.22.100")
+        this.response = setupApiCall("82.25.22.100");
 
         this.response
             .expect(this.response.body.country, /^\w+$/)
@@ -96,8 +120,7 @@ describe("app api /countries.json", function ()
 
     it.skip("returns country name for ipv6 address", function (fnAsyncDone)
     {
-        this.response
-            .get("/countries.json/82.25.22.100.12.67")
+        this.response = setupApiCall("82.25.22.100.12.67");
 
         this.response
             .expect(this.response.body.country, /^\w+$/)
@@ -106,12 +129,17 @@ describe("app api /countries.json", function ()
 
     it.skip("returns country name for multiple ip addresses", function (fnAsyncDone)
     {
-        this.response
-            .get("/countries.json/82.25.22.100,82.25.22.100.12.67")
+        this.response = setupApiCall(["82.25.22.100", "82.25.22.100.12.67"]);
 
         this.response
             .expect(this.response.body.country, /^\w+$/)
             .end(fnAsyncDone);
     });
+
+    it("should invoke error handler", function ()
+    {
+        expect(app.do.invokeErrorHandler).to.throw(/^Error simulation$/);
+
+    });
 
 });

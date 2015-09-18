@@ -3,8 +3,9 @@
   "name": "node-play",
   "version": "0.0.1",
   "description": "Playing around with node and express",
-  "main": "app.js",
+  "main": "lib/app.js",
   "scripts": {
+    "start": "node lib/app.js",
     "docs": "jsdoc --destination doc --recurse test/ lib/ Gruntfile.js README.md",
     "test": "mocha --reporter tap",
     "coverage-view": "chromium-browser doc/coverage/index.html",
@@ -39,7 +40,8 @@
   },
   "homepage": "https://github.com/bcowgill/node-play",
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "morgan": "^1.6.1"
   },
   "devDependencies": {
     "mocha": "^1.20.1",

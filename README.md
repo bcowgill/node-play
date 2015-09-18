@@ -22,6 +22,8 @@ package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon
   npm run-script coverage-view
   npm run-script doc-view
   npm run-script edit
+  npm start
+  wget http://localhost:5508/ping/
 ```
 
 ## Tests
@@ -36,6 +38,11 @@ package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon
 - in progress - use supertests to spec the location microservice api
 - write code to implement the api
 - grunt run script plugin
+- [15:25:57] Bruno Bossola: Error response:
+http://microservices.qa.workshare.com:10002/api/countries.json/192.168.1.1
+- [15:26:05] Bruno Bossola: Valid response:
+http://microservices.qa.workshare.com:10002/api/countries.json/24.24.24.24
+- [15:26:23] Bruno Bossola: .
 
 ## Contributing
 

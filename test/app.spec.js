@@ -85,17 +85,47 @@ describe("app api /countries.json", function ()
 
         this.response
             .expect("Content-Type", /application\/json/)
-            .expect(200)
+            .expect(200, [
+                {
+                    host: "192.168.0.2",
+                    error: "The address 192.168.0.2 is not in the database."
+                }
+            ])
             .end(fnAsyncDone);
     });
 
-    it.skip("returns error for non-ip address", function (fnAsyncDone)
+    it.skip("returns error information for unknown host", function (fnAsyncDone)
     {
-        this.response = setupApiCall("google.com");
+        this.response = setupApiCall("barbarians");
+
+        this.response
+            .expect("Content-Type", /application\/json/)
+            .expect(200, [
+                {
+                    host: "barbarians",
+                    error: "Unknown host: barbarians"
+                }
+            ])
+            .end(fnAsyncDone);
+    });
+
+    it.skip("returns location info from hostname", function (fnAsyncDone)
+    {
+        this.response = setupApiCall("crapola.com");
 
         this.response
             .expect("Content-Type", /text\/plain/)
-            .expect(404)
+            .expect(200, [
+                {
+                    country: {
+                        language: "en",
+                        name: "France",
+                        geoname_id: 3017382,
+                        iso_code: "FR"
+                    },
+                    host: "217.70.184.38"
+                }
+            ])
             .end(fnAsyncDone);
     });
 

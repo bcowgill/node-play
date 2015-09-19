@@ -6,6 +6,7 @@
   "main": "lib/app.js",
   "scripts": {
     "start": "node lib/app.js",
+    "production": "NODE_ENV=production node lib/app.js",
     "docs": "jsdoc --destination doc --recurse test/ lib/ Gruntfile.js README.md",
     "test": "mocha --reporter tap",
     "coverage-view": "chromium-browser doc/coverage/index.html",

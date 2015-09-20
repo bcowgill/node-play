@@ -94,7 +94,7 @@ describe("app api /countries.json", function ()
             .end(fnAsyncDone);
     });
 
-    it.skip("returns error information for unknown host", function (fnAsyncDone)
+    it("returns error information for unknown host", function (fnAsyncDone)
     {
         this.response = setupApiCall("barbarians");
 

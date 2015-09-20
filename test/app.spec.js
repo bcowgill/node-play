@@ -220,6 +220,14 @@ describe("app error handler test", function ()
 
 });
 
+describe("inspect unit test", function ()
+{
+    it("should inspect an object", function ()
+    {
+        expect(app.do.inspect({})).to.equal("{}");
+    });
+});
+
 describe("checkStartDir unit test", function ()
 {
     beforeEach(function() {

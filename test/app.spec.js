@@ -109,18 +109,16 @@ describe("app api /countries.json", function ()
             .end(fnAsyncDone);
     });
 
-    it.skip("returns location info from hostname", function (fnAsyncDone)
+    it("returns location info from hostname", function (fnAsyncDone)
     {
         this.response = setupApiCall("crapola.com");
 
         this.response
-            .expect("Content-Type", /text\/plain/)
+            .expect("Content-Type", /application\/json/)
             .expect(200, [
                 {
                     country: {
-                        language: "en",
                         name: "France",
-                        geoname_id: 3017382,
                         iso_code: "FR"
                     },
                     host: "217.70.184.38"
@@ -129,7 +127,7 @@ describe("app api /countries.json", function ()
             .end(fnAsyncDone);
     });
 
-    it.skip("returns content type and success code for ip address", function (fnAsyncDone)
+    it("returns content type and success code for ip address", function (fnAsyncDone)
     {
         this.response = setupApiCall("82.25.22.100");
 
@@ -139,12 +137,17 @@ describe("app api /countries.json", function ()
             .end(fnAsyncDone);
     });
 
-    it.skip("returns country name for ip address", function (fnAsyncDone)
+    it("returns country name for ip address", function (fnAsyncDone)
     {
         this.response = setupApiCall("82.25.22.100");
 
         this.response
-            .expect(this.response.body.country, /^\w+$/)
+            .expect(function (response) {
+                expect(response.body.length).to.equal(1);
+                expect(response.body[0].host).to.equal("82.25.22.100");
+                expect(response.body[0].country.name).to.match(/^[ \w]+$/);
+                expect(response.body[0].country.iso_code).to.match(/^[A-Z][A-Z]$/);
+            })
             .end(fnAsyncDone);
     });
 
@@ -159,7 +162,7 @@ describe("app api /countries.json", function ()
 
     it.skip("returns country name for multiple ip addresses", function (fnAsyncDone)
     {
-        this.response = setupApiCall(["82.25.22.100", "82.25.22.100.12.67"]);
+        this.response = setupApiCall(["82.25.22.100", "217.70.184.38"]);
 
         this.response
             .expect(this.response.body.country, /^\w+$/)

@@ -5,12 +5,15 @@ A node play area while working from the book Express in Action: Node application
 
 package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon unit testing and istanbul coverage reporting.
 
+It also uses 'forever' to start the app and keep it running. The dev startup will restart when changes are made to the code.
+
 ## Installation
 
 ```bash
   git clone https://github.com/bcowgill/node-play.git
   cd node-play
   npm install
+  sudo npm install -g forever istanbul jsdoc mocha
 ```
 
 ## Usage
@@ -23,7 +26,8 @@ package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon
   npm run-script doc-view
   npm run-script edit
   npm start
-  npm production
+  npm run-script production
+  npm stop
   wget http://localhost:5508/ping/
 ```
 
@@ -36,15 +40,8 @@ package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon
 
 ## Todo
 
-- in progress - use supertests to spec the location microservice api
-- write code to implement the api
+- 95% write code to implement the api
 - grunt run script plugin
-- [15:25:57] Bruno Bossola: Error response:
-http://microservices.qa.workshare.com:10002/api/countries.json/192.168.1.1
-- [15:26:05] Bruno Bossola: Valid response:
-http://microservices.qa.workshare.com:10002/api/countries.json/24.24.24.24
-- [15:26:23] Bruno Bossola: .
-- npm install forever
 - npm install lodash
 
 ## Contributing

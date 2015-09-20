@@ -1,0 +1,8 @@
+// forever.prod.json
+{
+    "uid": "prod",
+    "append": true,
+    "watch": false,
+    "script": "lib/app.js",
+    "sourceDir": "."
+}

@@ -5,8 +5,11 @@
   "description": "Playing around with node and express",
   "main": "lib/app.js",
   "scripts": {
-    "start": "node lib/app.js",
-    "production": "NODE_ENV=production node lib/app.js",
+    "start": "forever start ./forever.dev.json",
+    "stop": "forever stop lib/app.js",
+    "simplestart": "node lib/app.js",
+    "production": "NODE_ENV=production forever start ./forever.prod.json",
+    "simpleproduction": "NODE_ENV=production node lib/app.js",
     "docs": "jsdoc --destination doc --recurse test/ lib/ Gruntfile.js README.md",
     "test": "mocha --reporter tap",
     "coverage-view": "chromium-browser doc/coverage/index.html",
@@ -42,6 +45,7 @@
   "homepage": "https://github.com/bcowgill/node-play",
   "dependencies": {
     "express": "^4.13.3",
+    "forever": "^0.15.1",
     "morgan": "^1.6.1"
   },
   "devDependencies": {

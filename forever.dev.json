@@ -1,0 +1,10 @@
+// forever.dev.json
+{
+    // Comments are supported
+    "uid": "dev",
+    "append": true,
+    "watch": true,
+    "watchDirectory": "lib/",
+    "script": "lib/app.js",
+    "sourceDir": "."
+}

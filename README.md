@@ -59,7 +59,7 @@ Failed transactions:	          99
 Longest transaction:	       30.01
 Shortest transaction:	        0.00
 
-Results after clustering
+Results after clustering (8 cpus)
 
 Transactions:		          40 hits
 Availability:		       29.85 %

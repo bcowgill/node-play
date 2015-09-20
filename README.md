@@ -64,7 +64,24 @@ Failed transactions:	           0
 Longest transaction:	        5.05
 Shortest transaction:	        5.00
 
-Results after using node clustering
+Results after clustering
+
+Transactions:		          40 hits
+Availability:		       29.85 %
+Elapsed time:		       59.36 secs
+Data transferred:	        0.00 MB
+Response time:		       19.86 secs
+Transaction rate:	        0.67 trans/sec
+Throughput:		        0.00 MB/sec
+Concurrency:		       13.38
+Successful transactions:          40
+Failed transactions:	          94
+Longest transaction:	       29.65
+Shortest transaction:	        0.00
+
+
+
+
 
 ## Todo
 

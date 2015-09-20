@@ -167,6 +167,29 @@ describe("app api /countries.json", function ()
     });
 });
 
+describe("app startup log test", function ()
+{
+    beforeEach(function() {
+        this.save = console.log;
+    });
+
+    afterEach(function () {
+        console.log = this.save;
+        this.save = null;
+    });
+
+    it("should log about startup", function ()
+    {
+        var log;
+        console.log = function (message) {
+            log = message;
+        };
+
+        app.do.thenLogStartup();
+        expect(log).to.equal("App started on port 5508 development");
+    });
+});
+
 describe("app error handler test", function ()
 {
     beforeEach(function () {
@@ -222,4 +245,3 @@ describe("checkStartDir unit test", function ()
         app.do.checkStartDir("nosuchdirectory");
     });
 });
-

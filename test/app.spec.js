@@ -165,11 +165,61 @@ describe("app api /countries.json", function ()
             .expect(this.response.body.country, /^\w+$/)
             .end(fnAsyncDone);
     });
+});
+
+describe("app error handler test", function ()
+{
+    beforeEach(function () {
+        this.response = supertest(app)
+            .get("/error/")
+            .set("User-Agent", "test app.spec.js")
+            .set("Accept", "text/plain");
+    });
+
+    afterEach(function () {
+        process.env.NODE_ENV = "";
+    });
 
     it("should invoke error handler", function ()
     {
         expect(app.do.invokeErrorHandler).to.throw(/^Error simulation$/);
+    });
 
+    it("should not invoke error handler in production", function (fnAsyncDone)
+    {
+        process.env.NODE_ENV = "production";
+
+        this.response
+            .expect("Content-Type", /text\/plain/)
+            .expect(404)
+            .end(fnAsyncDone);
     });
 
 });
+
+describe("checkStartDir unit test", function ()
+{
+    beforeEach(function() {
+        this.save = app.do.throwError;
+    });
+
+    afterEach(function () {
+        app.do.throwError = this.save;
+        this.save = null;
+    });
+
+    it("should throw error if directory not present", function (asyncDone)
+    {
+        app.do.throwError = function (error) {
+
+            var message = "^Error: Application startup in wrong directory. " +
+                "Directory nosuchdirectory must exist with read permissions. " +
+                "Error:";
+            expect(error).to.match(new RegExp(message));
+            asyncDone();
+        };
+
+        app.do.checkStartDir("nosuchdirectory");
+    });
+});
+

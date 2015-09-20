@@ -46,23 +46,18 @@ siege -c100 -t1M http://localhost:5508/slow
 
 Results before using node clustering
 
-** SIEGE 3.0.8
-** Preparing 100 concurrent users for battle.
-The server is now under siege...
-Lifting the server siege...      done.
-
-Transactions:		        1033 hits
-Availability:		      100.00 %
-Elapsed time:		       59.56 secs
+Transactions:		          16 hits
+Availability:		       13.91 %
+Elapsed time:		       59.91 secs
 Data transferred:	        0.00 MB
-Response time:		        5.01 secs
-Transaction rate:	       17.34 trans/sec
+Response time:		       16.03 secs
+Transaction rate:	        0.27 trans/sec
 Throughput:		        0.00 MB/sec
-Concurrency:		       86.83
-Successful transactions:        1033
-Failed transactions:	           0
-Longest transaction:	        5.05
-Shortest transaction:	        5.00
+Concurrency:		        4.28
+Successful transactions:          16
+Failed transactions:	          99
+Longest transaction:	       30.01
+Shortest transaction:	        0.00
 
 Results after clustering
 
@@ -78,10 +73,6 @@ Successful transactions:          40
 Failed transactions:	          94
 Longest transaction:	       29.65
 Shortest transaction:	        0.00
-
-
-
-
 
 ## Todo
 

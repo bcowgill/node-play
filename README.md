@@ -38,6 +38,34 @@ It also uses 'forever' to start the app and keep it running. The dev startup wil
   grunt test --reporter nyan
 ```
 
+## Performance
+
+```bash
+siege -c100 -t1M http://localhost:5508/slow
+```
+
+Results before using node clustering
+
+** SIEGE 3.0.8
+** Preparing 100 concurrent users for battle.
+The server is now under siege...
+Lifting the server siege...      done.
+
+Transactions:		        1033 hits
+Availability:		      100.00 %
+Elapsed time:		       59.56 secs
+Data transferred:	        0.00 MB
+Response time:		        5.01 secs
+Transaction rate:	       17.34 trans/sec
+Throughput:		        0.00 MB/sec
+Concurrency:		       86.83
+Successful transactions:        1033
+Failed transactions:	           0
+Longest transaction:	        5.05
+Shortest transaction:	        5.00
+
+Results after using node clustering
+
 ## Todo
 
 - 95% write code to implement the api

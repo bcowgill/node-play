@@ -77,7 +77,7 @@ function setupApiCall (ips) {
     return response;
 }
 
-describe("app api /countries.json", function ()
+describe("app api /api/countries.json", function ()
 {
     it("returns error information for private ip address", function (fnAsyncDone)
     {

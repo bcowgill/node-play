@@ -12,8 +12,8 @@ It also uses 'forever' to start the app and keep it running. The dev startup wil
 ```bash
   git clone https://github.com/bcowgill/node-play.git
   cd node-play
-  npm install
   sudo npm install -g forever istanbul jsdoc mocha
+  npm install
 ```
 
 ## Usage
@@ -29,6 +29,10 @@ It also uses 'forever' to start the app and keep it running. The dev startup wil
   npm run-script production
   npm stop
   wget http://localhost:5508/ping/
+  wget http://localhost:5508/api/countries.json/:iplist
+  wget http://localhost:5508/slow/
+  wget http://localhost:5508/error/
+  wget http://localhost:5508/die/
 ```
 
 ## Tests

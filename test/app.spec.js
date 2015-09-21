@@ -9,6 +9,7 @@
 
 // logging during test runs muck up the output
 process.env.NOLOGGING = "true";
+process.env.NOCLUSTER = "true";
 
 var app = require("../lib/app"),
     chai = require("chai"),
@@ -189,7 +190,7 @@ describe("app startup log test", function ()
         };
 
         app.do.thenLogStartup();
-        expect(log).to.equal("App started on port 5508 development");
+        expect(log).to.equal("App started worker#0 on port 5508 development");
     });
 });
 
@@ -220,7 +221,45 @@ describe("app error handler test", function ()
             .expect(404)
             .end(fnAsyncDone);
     });
+});
 
+describe("/slow/ handler test", function ()
+{
+    beforeEach(function () {
+        this.save = app.do.log;
+            app.do.log = function (message) {
+            this.appLog = message;
+        };
+
+        this.saveSlow = app.do.slowLoops;
+        app.do.slowLoops = 15000;
+
+        this.response = supertest(app)
+            .get("/slow/")
+            .set("User-Agent", "test app.spec.js")
+            .set("Accept", "text/plain");
+    });
+
+    afterEach(function () {
+        app.do.log = this.save;
+        this.save = null;
+        app.do.slowLoops = this.saveSlow;
+    });
+
+    it("should respond after a while", function (fnAsyncDone)
+    {
+        this.response
+            .expect("Content-Type", /text\/plain/)
+            .expect(200)
+            .end(fnAsyncDone);
+    });
+
+    it("should respond with what", function (fnAsyncDone)
+    {
+        this.response
+            .expect(textShouldBe("what? 63890"))
+            .end(fnAsyncDone);
+    });
 });
 
 describe("inspect unit test", function ()

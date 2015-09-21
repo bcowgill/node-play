@@ -50,6 +50,11 @@ siege -c100 -t1M http://localhost:5508/slow
 
 Results before using node clustering
 
+** SIEGE 3.0.8
+** Preparing 100 concurrent users for battle.
+The server is now under siege...
+Lifting the server siege...      done.
+
 Transactions:		          16 hits
 Availability:		       13.91 %
 Elapsed time:		       59.91 secs

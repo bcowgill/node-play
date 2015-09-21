@@ -174,18 +174,18 @@ describe("app api /api/countries.json", function ()
 describe("app startup log test", function ()
 {
     beforeEach(function() {
-        this.save = console.log;
+        this.save = app.do.log;
     });
 
     afterEach(function () {
-        console.log = this.save;
+        app.do.log = this.save;
         this.save = null;
     });
 
     it("should log about startup", function ()
     {
         var log;
-        console.log = function (message) {
+        app.do.log = function (message) {
             log = message;
         };
 

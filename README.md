@@ -1,6 +1,8 @@
 node-play
 =========
 
+Current state: location microservice implmented handles multiple ip addresses. Uses forever to keep the server up always. Uses cluster module to maximise performance on multi-cpu servers.
+
 A node play area while working from the book Express in Action: Node applications with Express and its companion tools
 
 package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon unit testing and istanbul coverage reporting.

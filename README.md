@@ -85,7 +85,6 @@ Shortest transaction:	        0.00
 
 ## Todo
 
-- 95% write code to implement the api
 - grunt run script plugin
 - npm install lodash
 

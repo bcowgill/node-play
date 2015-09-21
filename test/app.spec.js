@@ -152,6 +152,25 @@ describe("app api /api/countries.json", function ()
             .end(fnAsyncDone);
     });
 
+    it("returns country name for multiple ip addresses", function (fnAsyncDone)
+    {
+        this.response = setupApiCall(["82.25.22.100", "217.70.184.38"]);
+
+        this.response
+            .expect(function (response) {
+                expect(response.body.length).to.equal(2);
+
+                expect(response.body[0].host).to.match(/^\d+\.\d+\.\d+\.\d+$/);
+                expect(response.body[0].country.name).to.match(/^[ \w]+$/);
+                expect(response.body[0].country.iso_code).to.match(/^[A-Z][A-Z]$/);
+
+                expect(response.body[0].host).to.match(/^\d+\.\d+\.\d+\.\d+$/);
+                expect(response.body[1].country.name).to.match(/^[ \w]+$/);
+                expect(response.body[1].country.iso_code).to.match(/^[A-Z][A-Z]$/);
+            })
+            .end(fnAsyncDone);
+    });
+
     it.skip("returns country name for ipv6 address", function (fnAsyncDone)
     {
         this.response = setupApiCall("82.25.22.100.12.67");
@@ -159,16 +178,7 @@ describe("app api /api/countries.json", function ()
         this.response
             .expect(this.response.body.country, /^\w+$/)
             .end(fnAsyncDone);
-    });
-
-    it.skip("returns country name for multiple ip addresses", function (fnAsyncDone)
-    {
-        this.response = setupApiCall(["82.25.22.100", "217.70.184.38"]);
-
-        this.response
-            .expect(this.response.body.country, /^\w+$/)
-            .end(fnAsyncDone);
-    });
+    });
 });
 
 describe("app startup log test", function ()

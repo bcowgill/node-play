@@ -22,6 +22,13 @@ var app = require("../lib/app"),
                     " but got " + response.text);
             }
         };
+    },
+    expectLocationShouldBeProper = function (got) {
+        expect(got.host).to.match(/^\d+\.\d+\.\d+\.\d+$/);
+        expect(got.country.name).to.match(/^[ \w]+$/);
+        expect(got.country.language).to.match(/^[ \w]+$/);
+        expect(got.country.iso_code).to.match(/^[A-Z][A-Z]$/);
+        expect(got.country.geoname_id).to.match(/^\d+$/);
     };
 
 describe("app api /unknown/ tests", function ()
@@ -121,6 +128,7 @@ describe("app api /api/countries.json", function ()
                     country: {
                         name: "France",
                         language: "French",
+                        geoname_id: 3688157437,
                         iso_code: "FR"
                     },
                     host: "217.70.184.38"
@@ -147,9 +155,7 @@ describe("app api /api/countries.json", function ()
             .expect(function (response) {
                 expect(response.body.length).to.equal(1);
                 expect(response.body[0].host).to.equal("82.25.22.100");
-                expect(response.body[0].country.name).to.match(/^[ \w]+$/);
-                expect(response.body[0].country.language).to.match(/^[ \w]+$/);
-                expect(response.body[0].country.iso_code).to.match(/^[A-Z][A-Z]$/);
+                expectLocationShouldBeProper(response.body[0]);
             })
             .end(fnAsyncDone);
     });
@@ -162,15 +168,8 @@ describe("app api /api/countries.json", function ()
             .expect(function (response) {
                 expect(response.body.length).to.equal(2);
 
-                expect(response.body[0].host).to.match(/^\d+\.\d+\.\d+\.\d+$/);
-                expect(response.body[0].country.name).to.match(/^[ \w]+$/);
-                expect(response.body[0].country.language).to.match(/^[ \w]+$/);
-                expect(response.body[0].country.iso_code).to.match(/^[A-Z][A-Z]$/);
-
-                expect(response.body[1].host).to.match(/^\d+\.\d+\.\d+\.\d+$/);
-                expect(response.body[1].country.name).to.match(/^[ \w]+$/);
-                expect(response.body[1].country.language).to.match(/^[ \w]+$/);
-                expect(response.body[1].country.iso_code).to.match(/^[A-Z][A-Z]$/);
+                expectLocationShouldBeProper(response.body[0]);
+                expectLocationShouldBeProper(response.body[1]);
             })
             .end(fnAsyncDone);
     });

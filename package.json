@@ -5,7 +5,8 @@
   "description": "Playing around with node and express",
   "main": "lib/app.js",
   "scripts": {
-    "start": "forever start ./forever.dev.json",
+    "start": "nodemon --watch lib/ --delay 1 --verbose",
+    "startforever": "forever start ./forever.dev.json",
     "stop": "forever stop lib/app.js",
     "simplestart": "node lib/app.js",
     "production": "NODE_ENV=production forever start ./forever.prod.json",
@@ -48,7 +49,8 @@
     "country-data": "0.0.23",
     "express": "^4.13.3",
     "forever": "^0.15.1",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "nodemon": "^1.7.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",

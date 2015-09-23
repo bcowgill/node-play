@@ -7,7 +7,9 @@ A node play area while working from the book Express in Action: Node application
 
 package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon unit testing and istanbul coverage reporting.
 
-It also uses 'forever' to start the app and keep it running. The dev startup will restart when changes are made to the code.
+It also uses 'forever' to start the app and keep it running in production. 
+
+The dev startup uses 'nodemon' instead of 'forever' to restart when changes are made to the code. 'forever' will also do this but nodemon shows app log on stdout and forever saves to log files. So nodemon better for dev.
 
 ## Installation
 

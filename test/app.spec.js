@@ -203,7 +203,7 @@ describe("app startup log test", function ()
         };
 
         app.do.thenLogStartup();
-        expect(log).to.equal("App started worker#0 on port 5508 development");
+        expect(log).to.equal("App started worker on port 5508 for development");
     });
 });
 

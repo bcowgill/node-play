@@ -11,6 +11,8 @@ It also uses 'forever' to start the app and keep it running in production.
 
 The dev startup uses 'nodemon' instead of 'forever' to restart when changes are made to the code. 'forever' will also do this but nodemon shows app log on stdout and forever saves to log files. So nodemon better for dev.
 
+Added module blocked so that long blocking requests get logged to the console so that something can be done about them.
+
 ## Installation
 
 ```bash
@@ -89,6 +91,7 @@ Shortest transaction:	        0.00
 
 ## Todo
 
+- change logging output to show worker id number
 - grunt run script plugin
 - npm install lodash
 

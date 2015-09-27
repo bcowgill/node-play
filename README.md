@@ -92,8 +92,17 @@ Shortest transaction:	        0.00
 ## Todo
 
 - change logging output to show worker id number
+- npm install bunyan for that perhaps
+- npm install async to avoid callback hell
 - grunt run script plugin
 - npm install lodash
+- npm install tape # another test framework
+- npm install blanket # another coverage framework
+- npm i pre-commit --save-dev  # force tests to pass before a commit
+- npm install look # for profiling your node server
+- supervisord for prod, pm2 other monitoring and restarting options
+- node-inspector also good for debugging
+- http://eslint.org/docs/rules/ # alternative js linter
 
 ## Contributing
 

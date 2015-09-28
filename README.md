@@ -1,17 +1,19 @@
-node-play
-=========
+node-play asyncRus Jonathan's Team
+==================================
 
-Current state: location microservice implmented handles multiple ip addresses. Uses forever to keep the server up always. Uses cluster module to maximise performance on multi-cpu servers.
+## Overview
 
 A node play area while working from the book Express in Action: Node applications with Express and its companion tools
 
-package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon unit testing and istanbul coverage reporting.
+##Current state:
 
-It also uses 'forever' to start the app and keep it running in production. 
-
-The dev startup uses 'nodemon' instead of 'forever' to restart when changes are made to the code. 'forever' will also do this but nodemon shows app log on stdout and forever saves to log files. So nodemon better for dev.
-
-Added module blocked so that long blocking requests get logged to the console so that something can be done about them.
+- Location microservice implemented handles multiple ip addresses.
+- Uses forever/nodemon to keep the server up always.
+  * 'forever' to start the app and keep it running in production.
+  * The dev startup uses 'nodemon' instead of 'forever' to restart when changes are made to the code. 'forever' will also do this but nodemon shows app log on stdout and forever saves to log files. So nodemon better for dev. 
+- Uses cluster module to maximise performance on multi-cpu servers.
+- Detects when the server is blocking so that the issue can be resolved (uses module 'blocked')
+- package.json/Gruntfile.js has been tooled up for jshint, jsdoc, mocha/chai/sinon unit testing and istanbul coverage reporting.
 
 ## Installation
 

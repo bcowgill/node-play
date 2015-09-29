@@ -1,6 +1,9 @@
 node-play asyncRus Jonathan's Team
 ==================================
 
+Production Team Goal
+"...produce a nodjs based location microservice that can substitute the current Java implementation in production"
+
 ## Overview
 
 A node play area while working from the book Express in Action: Node applications with Express and its companion tools

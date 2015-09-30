@@ -34,6 +34,7 @@
 */
 
 function getOptions (grunt) {
+	/* jshint maxcomplexity: 7 */
 	'use strict';
 
 	var also = grunt.option('also') || [];
@@ -56,6 +57,12 @@ function getOptions (grunt) {
 			lines:       90,
 			statements:  90
 		};
+
+	// --nocoverfail to prevent coverage from failing the build
+	if (grunt.option('nocoverfail'))
+	{
+		coverLimit = coverAllLimit = {};
+	}
 
 	return {
 		'watch': watch,

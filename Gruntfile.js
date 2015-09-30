@@ -35,6 +35,7 @@
 
 function getOptions (grunt) {
 	'use strict';
+
 	var also = grunt.option('also') || [];
 	var watch = grunt.option('watch') || ['jshint:gruntfile', 'jshint:lib', 'jshint:test', 'coverage'];
 	watch = Array.isArray(watch) ? watch : [watch];
@@ -42,13 +43,34 @@ function getOptions (grunt) {
 	if (also.length) {
 		watch.push(also);
 	}
-	return watch;
+
+	var coverLimit = {
+			functions:   75,
+			branches:    75,
+			lines:       75,
+			statements:  75
+		},
+		coverAllLimit =  {
+			functions:   90,
+			branches:    90,
+			lines:       90,
+			statements:  90
+		};
+
+	return {
+		'watch': watch,
+		'coverLimit': coverLimit,
+		'coverAllLimit': coverAllLimit
+	};
 }
 
 module.exports = function(grunt) {
 	'use strict';
 
-	var watch = getOptions(grunt);
+	var opts = getOptions(grunt),
+		watch = opts.watch,
+		coverLimit = opts.coverLimit,
+		coverAllLimit = opts.coverAllLimit;
 
 	// Project configuration.
 	grunt.initConfig({
@@ -150,24 +172,14 @@ module.exports = function(grunt) {
 					ui: 'bdd',
 
 					// check percentage coverage to be a good build
-					check: {
-						functions:   95,
-						branches:    80,
-						lines:       85,
-						statements:  85
-					}
+					check: coverLimit
 				}
 			},
 			coveralls: {
 				src: '<%= jshint.test.spec %>',
 				options: {
 					coverage: true, // this will make the grunt.event.on('coverage') event listener to be triggered
-					check: {
-						functions:   75,
-						branches:    75,
-						lines:       75,
-						statements:  75
-					},
+					check: coverAllLimit,
 					root: './lib', // define where the cover task should consider the root of libraries that are covered by tests
 					reportFormats: ['cobertura','lcovonly']
 				}

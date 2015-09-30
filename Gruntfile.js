@@ -1,4 +1,4 @@
-/*jshint indent: 4, smarttabs: true, maxstatements: 100, maxlen: 140 */
+/*jshint indent: 4, smarttabs: true, maxcomplexity: 6, maxstatements: 25, maxlen: 140 */
 /*global module:false */
 /**
 	@file Gruntfile.js
@@ -7,19 +7,23 @@
 	@description
 	Grunt build configuration.
 
- 	@example
+	@example
 
- 	# build all, then watch for changes use the airplane test reporter
- 	grunt all watch --reporter landing --force
+	# TDD mode, skip jshint, just run coverage+tests or tests alone
+	grunt tdd --watch coverage
+	grunt tdd --watch test
 
- 	# watch file changes to rerun tests and also build the documentation
- 	grunt watch --also jsdoc
+	# build all, then watch for changes use the airplane test reporter
+	grunt all watcher --reporter landing --force
 
- 	# jshint check a single file
- 	grunt jshint:single --check-file filename.js
+	# watch file changes to rerun tests and also build the documentation
+	grunt watcher --also jsdoc
 
- 	# run tests with a chosen reporter style
- 	grunt test --reporter spec
+	# jshint check a single file
+	grunt jshint:single --check-file filename.js
+
+	# run tests with a chosen reporter style
+	grunt test --reporter spec
 
 	@see {@link http://usejsdoc.org/ JSDoc Documentation}
 */
@@ -28,10 +32,23 @@
 	Grunt build configuration.
 	@module Gruntfile
 */
+
+function getOptions (grunt) {
+	'use strict';
+	var also = grunt.option('also') || [];
+	var watch = grunt.option('watch') || ['jshint:gruntfile', 'jshint:lib', 'jshint:test', 'coverage'];
+	watch = Array.isArray(watch) ? watch : [watch];
+	also = Array.isArray(also) ? also : [also];
+	if (also.length) {
+		watch.push(also);
+	}
+	return watch;
+}
+
 module.exports = function(grunt) {
 	'use strict';
 
-	var also = grunt.option('also') || [];
+	var watch = getOptions(grunt);
 
 	// Project configuration.
 	grunt.initConfig({
@@ -163,7 +180,7 @@ module.exports = function(grunt) {
 			@see {@link http://usejsdoc.org/ jsdoc documentation tags}
 			@see {@link http://usejsdoc.org/about-commandline.html jsdoc command line options}
 		*/
-		jsdoc : {
+		jsdoc: {
 			docs : {
 				dest: 'doc',
 				src: [
@@ -182,17 +199,17 @@ module.exports = function(grunt) {
 			@see {@link https://github.com/gruntjs/grunt-contrib-watch Grunt watch plugin}
 		*/
 		watch: {
-			gruntfile: {
-				files: '<%= jshint.gruntfile.src %>',
-				tasks: ['jshint:gruntfile', 'coverage', also]
+			tdd: {
+				files: [
+					'<%= jshint.gruntfile.src %>',
+					'<%= jshint.lib.src %>',
+					'<%= jshint.test.src %>'
+				],
+				tasks: watch
 			},
-			lib: {
-				files: '<%= jshint.lib.src %>',
-				tasks: ['jshint:lib', 'coverage', also]
-			},
-			test: {
-				files: '<%= jshint.test.src %>',
-				tasks: ['jshint:test', 'coverage', also]
+			all: {
+				files: '<%= watch.tdd.files %>',
+				tasks: watch
 			}
 		}
 	});
@@ -224,6 +241,9 @@ module.exports = function(grunt) {
 		// as template lookup with <%= mocha-chai-sinon %> won't work
 		'mocha-chai-sinon'
 	]);
+	grunt.registerTask('tests', ['test']);
+	grunt.registerTask('tdd', ['watch:tdd']);
+	grunt.registerTask('watcher', ['watch:all']);
 	grunt.registerTask('coverage', [
 		'mocha_istanbul:coverage'
 	]);

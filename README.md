@@ -107,7 +107,9 @@ Shortest transaction:	        0.00
 - npm install look # for profiling your node server
 - supervisord for prod, pm2 other monitoring and restarting options
 - node-inspector also good for debugging
+- how to step through debug of nodejs with webstorm
 - http://eslint.org/docs/rules/ # alternative js linter
+- grunt tdd target to watch files and run tests/coverage w/o the jshint business
 
 ## Contributing
 

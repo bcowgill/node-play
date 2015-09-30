@@ -13,6 +13,7 @@
     "simpleproduction": "NODE_ENV=production node lib/app.js",
     "docs": "jsdoc --destination doc --recurse test/ lib/ Gruntfile.js README.md",
     "test": "mocha --reporter tap",
+    "tdd": "grunt tdd --watch test",
     "coverage-view": "chromium-browser doc/coverage/index.html",
     "doc-view": "chromium-browser doc/index.html",
     "docs-view": "chromium-browser doc/index.html",

@@ -22,22 +22,22 @@ describe("nocluster", function () {
 	});
 
 	it("should be readonly for isMock", function () {
-		expectReadOnly(nocluster, 'isMock');
+		expectReadOnly(nocluster, "isMock");
 	});
 
 	it("should have isMaster readonly false", function () {
 		expect(nocluster.isMaster).to.be.false;
-		expectReadOnly(nocluster, 'isMaster');
+		expectReadOnly(nocluster, "isMaster");
 	});
 
 	it("should have isWorker readonly true", function () {
 		expect(nocluster.isWorker).to.be.true;
-		expectReadOnly(nocluster, 'isWorker');
+		expectReadOnly(nocluster, "isWorker");
 	});
 
 	it("should have worker id readonly 0", function () {
-		expect(nocluster.worker.id).to.be.true;
-		expectReadOnly(nocluster.worker, 'id');
+		expect(nocluster.worker.id).to.be.equal(0);
+		expectReadOnly(nocluster.worker, "id");
 	});
 
 });

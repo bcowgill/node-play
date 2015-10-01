@@ -1,5 +1,6 @@
 /*jshint indent: 4, smarttabs: true, maxcomplexity: 6, maxstatements: 25, maxlen: 140 */
 /*global module:false */
+'use strict';
 /**
 	@file Gruntfile.js
 	@author Brent S.A. Cowgill
@@ -25,6 +26,9 @@
 	# run tests with a chosen reporter style
 	grunt test --reporter spec
 
+	# run a single test plan instead of all of them
+	grunt test --plan test/app.spec.js
+
 	@see {@link http://usejsdoc.org/ JSDoc Documentation}
 */
 
@@ -33,17 +37,13 @@
 	@module Gruntfile
 */
 
+function _arr (thing) {
+	thing = Array.isArray(thing) ? thing : [thing];
+	return thing;
+}
+
 function getOptions (grunt) {
 	/* jshint maxcomplexity: 7 */
-	'use strict';
-
-	var also = grunt.option('also') || [];
-	var watch = grunt.option('watch') || ['jshint:gruntfile', 'jshint:lib', 'jshint:test', 'coverage'];
-	watch = Array.isArray(watch) ? watch : [watch];
-	also = Array.isArray(also) ? also : [also];
-	if (also.length) {
-		watch.push(also);
-	}
 
 	var coverLimit = {
 			functions:   75,
@@ -56,7 +56,14 @@ function getOptions (grunt) {
 			branches:    90,
 			lines:       90,
 			statements:  90
-		};
+		},
+		plans = _arr(grunt.option('plan') || grunt.option('plans') || ['test/**/*.spec.js']),
+		also  = _arr(grunt.option('also') || []),
+		watch = _arr(grunt.option('watch') || ['jshint:gruntfile', 'jshint:lib', 'jshint:test', 'coverage']);
+
+	if (also.length) {
+		watch.push(also);
+	}
 
 	// --nocoverfail to prevent coverage from failing the build
 	if (grunt.option('nocoverfail'))
@@ -65,6 +72,7 @@ function getOptions (grunt) {
 	}
 
 	return {
+		'plans': plans,
 		'watch': watch,
 		'coverLimit': coverLimit,
 		'coverAllLimit': coverAllLimit
@@ -72,12 +80,12 @@ function getOptions (grunt) {
 }
 
 module.exports = function(grunt) {
-	'use strict';
 
 	var opts = getOptions(grunt),
 		watch = opts.watch,
 		coverLimit = opts.coverLimit,
-		coverAllLimit = opts.coverAllLimit;
+		coverAllLimit = opts.coverAllLimit,
+		plans = opts.plans;
 
 	// Project configuration.
 	grunt.initConfig({
@@ -123,7 +131,7 @@ module.exports = function(grunt) {
 					jshintrc: '.jshintrc-mocha-chai-sinon',
 					globals: {}
 				},
-				spec: ['test/**/*.spec.js'], // for coverage
+				spec: plans, // for coverage
 				src: ['test/**/*.js']
 			}
 		},
@@ -136,7 +144,7 @@ module.exports = function(grunt) {
 		*/
 		'mocha-chai-sinon': {
 			test: {
-				src: '<%= jshint.test.spec %>',
+				src: plans,
 				options: {
 					ui:  '<%= mocha_istanbul.coverage.options.ui %>',
 					// spec, list, tap, nyan, progress, dot, min, landing, doc, markdown, html-cov, json-cov, json, json-stream, xunit
@@ -163,7 +171,7 @@ module.exports = function(grunt) {
 			// use your browser to view this url for coverage report
 			coverageUrl: '<%= mocha_istanbul.coverage.options.coverageFolder %>/index.html',
 			coverage: {
-				src: '<%= jshint.test.spec %>',
+				src: plans,
 				options: {
 					dryRun: false, // to debug the istanbul command line
 					coverageFolder: 'doc/coverage',
@@ -183,7 +191,7 @@ module.exports = function(grunt) {
 				}
 			},
 			coveralls: {
-				src: '<%= jshint.test.spec %>',
+				src: plans,
 				options: {
 					coverage: true, // this will make the grunt.event.on('coverage') event listener to be triggered
 					check: coverAllLimit,

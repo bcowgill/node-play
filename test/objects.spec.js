@@ -1,6 +1,7 @@
 "use strict";
 
 var aBase = require("../lib/aBase"),
+    aDerived = require("../lib/aDerived"),
     chai = require("chai"),
     expect = chai.expect;
 
@@ -31,6 +32,7 @@ describe("aBase object with no properties", function () {
         var base = aBase();
         var privates = base._privates();
         expect(privates).to.be.deep.equal({
+            _inherits: ["aBase"],
             counter: 0,
             name: "unnamed0"
         });
@@ -44,6 +46,14 @@ describe("aBase object with no properties", function () {
         privates.counter = 42;
 
         expect(base.counter()).to.be.deep.equal(0);
+        fnAsyncDone();
+    });
+
+    it("should have inheritance array", function (fnAsyncDone)
+    {
+        var base = aBase();
+
+        expect(base._inherits()).to.be.deep.equal(["aBase"]);
         fnAsyncDone();
     });
 });
@@ -217,4 +227,71 @@ describe("accidentally using new is no problem", function () {
         fnAsyncDone();
     });
 
+});
+
+describe("aDerived object with no properties", function () {
+    it("should zero the counter for a new object", function (fnAsyncDone)
+    {
+        var derived = aDerived();
+        expect(derived.counter()).to.be.equal(0);
+        fnAsyncDone();
+    });
+
+    it("should have a default name for a new object", function (fnAsyncDone)
+    {
+        var derived = aDerived();
+        expect(derived.name()).to.be.equal("unnamed0");
+        fnAsyncDone();
+    });
+
+    it("should have a default mass for a new object", function (fnAsyncDone)
+    {
+        var derived = aDerived();
+        expect(derived.mass()).to.be.equal(0);
+        fnAsyncDone();
+    });
+
+    it("should have a method summary() for a new object", function (fnAsyncDone)
+    {
+        var derived = aDerived();
+        expect(derived.summary()).to.be.equal("0: unnamed0 is 0kg");
+        fnAsyncDone();
+    });
+
+    it("should not have access to the private counter property", function (fnAsyncDone)
+    {
+        var derived = aDerived();
+        expect(derived.counter).to.be.function;
+        fnAsyncDone();
+    });
+
+    it("should be able to peek at privates only", function (fnAsyncDone)
+    {
+        var derived = aDerived();
+        var privates = derived._privates();
+        expect(privates).to.be.deep.equal({
+            _inherits: ["aDerived"],
+            counter: 0,
+            name: "unnamed0"
+        });
+        fnAsyncDone();
+    });
+
+    it("should not be able to change private value", function (fnAsyncDone)
+    {
+        var derived = aDerived();
+        var privates = derived._privates();
+        privates.counter = 42;
+
+        expect(derived.counter()).to.be.deep.equal(0);
+        fnAsyncDone();
+    });
+
+    it("should have inheritance array", function (fnAsyncDone)
+    {
+        var derived = aDerived();
+
+        expect(derived._inherits()).to.be.deep.equal(["aDerived", "aBase"]);
+        fnAsyncDone();
+    });
 });

@@ -29,14 +29,23 @@ describe("aBase object with no properties", function () {
     it("should be able to peek at privates only", function (fnAsyncDone)
     {
         var base = aBase();
-        var privates = base.privates();
-        expect(JSON.parse(privates)).to.be.deep.equal({
+        var privates = base._privates();
+        expect(privates).to.be.deep.equal({
             counter: 0,
             name: "unnamed0"
         });
         fnAsyncDone();
     });
 
+    it("should not be able to change private value", function (fnAsyncDone)
+    {
+        var base = aBase();
+        var privates = base._privates();
+        privates.counter = 42;
+
+        expect(base.counter()).to.be.deep.equal(0);
+        fnAsyncDone();
+    });
 });
 
 describe("aBase object with some properties", function () {
@@ -107,6 +116,76 @@ describe("aBase object with supplied properties and privates", function () {
     });
 
 });
+
+describe("aBase object special cases for undefined / null / falsy", function () {
+
+    it("should use empty string property if specified", function (fnAsyncDone)
+    {
+        this.base = aBase({
+            counter: 24,
+            name: ""
+        }, {
+            counter: 42,
+            name: "private"
+        });
+        expect(this.base.name()).to.be.equal("");
+        fnAsyncDone();
+    });
+
+    it("should use zero value property if specified", function (fnAsyncDone)
+    {
+        this.base = aBase({
+            counter: 24,
+            name: 0
+        }, {
+            counter: 42,
+            name: "private"
+        });
+        expect(this.base.name()).to.be.equal(0);
+        fnAsyncDone();
+    });
+
+    it("should use false value property if specified", function (fnAsyncDone)
+    {
+        this.base = aBase({
+            counter: 24,
+            name: false
+        }, {
+            counter: 42,
+            name: "private"
+        });
+        expect(this.base.name()).to.be.false;
+        fnAsyncDone();
+    });
+
+    it("should use default value if undefined property given", function (fnAsyncDone)
+    {
+        this.base = aBase({
+            counter: 24,
+            name: void 0
+        }, {
+            counter: 42,
+            name: "private"
+        });
+        expect(this.base.name()).to.be.equal("private");
+        fnAsyncDone();
+    });
+
+    it("should use default value if null property given", function (fnAsyncDone)
+    {
+        this.base = aBase({
+            counter: 24,
+            name: null
+        }, {
+            counter: 42,
+            name: "private"
+        });
+        expect(this.base.name()).to.be.equal("private");
+        fnAsyncDone();
+    });
+
+});
+
 
 describe("accidentally using new is no problem", function () {
 

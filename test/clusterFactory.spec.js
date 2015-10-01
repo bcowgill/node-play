@@ -100,13 +100,16 @@ describe("clusterFactory", function () {
 				master: function () {
 					called.push("master");
 				},
+				workforce: function () {
+					called.push("workforce");
+				},
 				worker: function () {
 					called.push("worker");
 					workCluster = this;
 				}
 			});
 
-			expect(called).to.be.deep.equal(["master", "worker"]);
+			expect(called).to.be.deep.equal(["master", "worker", "workforce"]);
 			expect(workCluster).to.be.equal(cluster);
 		});
 
@@ -122,6 +125,9 @@ describe("clusterFactory", function () {
 				master: function () {
 					self.called.push("master");
 				},
+				workforce: function () {
+					self.called.push("workforce");
+				},
 				worker: function () {
 					self.called.push("worker");
 				}
@@ -132,7 +138,7 @@ describe("clusterFactory", function () {
 			expect(this.cluster.isMock).to.be.undefined;
 		});
 		it("should call master callback for master cluster", function () {
-			expect(this.called).to.be.deep.equal(["master"]);
+			expect(this.called).to.be.deep.equal(["master", "workforce"]);
 		});
 	});
 

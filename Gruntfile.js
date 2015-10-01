@@ -261,14 +261,22 @@ module.exports = function(grunt) {
 
 	// Default task.
 	grunt.registerTask('default', ['all']);
-	grunt.registerTask('all', ['windows', 'docs', 'coverage']);
-	grunt.registerTask('docs', ['clean:jsdoc', 'jsdoc']);
+	grunt.registerTask('all', ['check', 'doc', 'coverage']);
+	grunt.registerTask('doc', ['clean:jsdoc', 'jsdoc']);
+	grunt.registerTask('docs', ['doc']);
 	grunt.registerTask('test', [
 		// hyphens in name make the config section annoying
 		// as template lookup with <%= mocha-chai-sinon %> won't work
 		'mocha-chai-sinon'
 	]);
 	grunt.registerTask('tests', ['test']);
+	grunt.registerTask('check', [
+		'jshint:gruntfile',
+		'jshint:lib',
+		'jshint:test'
+	]);
+	grunt.registerTask('checktest', ['check', 'test']);
+	grunt.registerTask('checkcover', ['check', 'coverage']);
 	grunt.registerTask('tdd', ['watch:tdd']);
 	grunt.registerTask('watcher', ['watch:all']);
 	grunt.registerTask('coverage', [
@@ -277,10 +285,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('coveralls', [
 		'mocha_istanbul:coveralls'
 	]);
-	grunt.registerTask('windows', [
-		'jshint:gruntfile',
-		'jshint:lib',
-		'jshint:test'
-	]);
+	grunt.registerTask('windows', ['check']);
 	grunt.registerTask('single', ['jshint:single']);
 };

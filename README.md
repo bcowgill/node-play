@@ -118,3 +118,8 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Release History
 
+https://github.com/bcowgill/node-play
+https://github.com/jesuspc/node_club
+https://github.com/bbossola/location-service
+https://github.com/bbossola/microjs
+

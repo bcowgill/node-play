@@ -10,7 +10,7 @@
 	"smarttabs": true,
 	"maxparams": 3,
 	"maxdepth": 2,
-	"maxstatements": 11,
+	//"maxstatements": 11,
 	"maxcomplexity": 4,
 	"maxlen": 100,
 	"bitwise": true,

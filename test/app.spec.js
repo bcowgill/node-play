@@ -10,6 +10,7 @@
 // logging during test runs muck up the output
 process.env.NOLOGGING = "true";
 process.env.NOCLUSTER = "true";
+process.env.NOBLOCKED = "true";
 
 var app = require("../lib/app"),
     chai = require("chai"),

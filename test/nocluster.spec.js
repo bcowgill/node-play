@@ -4,16 +4,8 @@
 
 var nocluster = require("../lib/nocluster"),
 	chai = require("chai"),
-	expect = chai.expect;
-
-function expectReadOnly (obj, prop) {
-	var now = obj[prop];
-
-	expect(function () {
-		obj[prop] = 42;
-	}).to.not.change(obj, prop);
-	expect(obj[prop]).to.be.equal(now);
-}
+	expect = chai.expect,
+	expectReadOnly;
 
 describe("nocluster", function () {
 
@@ -41,3 +33,13 @@ describe("nocluster", function () {
 	});
 
 });
+
+expectReadOnly = function (obj, prop) {
+	var now = obj[prop];
+
+	expect(function () {
+		obj[prop] = "" + now + 42;
+	}).to.throw(/^Cannot assign to read only property/);
+	expect(obj[prop]).to.be.equal(now);
+};
+

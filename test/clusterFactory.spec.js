@@ -115,13 +115,24 @@ describe("clusterFactory", function () {
 
 	});
 
-	describe("clusterFactory with a cluster", function () {
+	describe("clusterFactory with a cluster, master process", function () {
 		beforeEach(function () {
 			var self = this;
 			self.called = [];
+			self.onDeadWorker = function () {};
 			self.cluster = clusterFactory.init({
 				nocluster: "false",
-				mockCluster: { isMaster: true },
+				workers: 1,
+				mockCluster: {
+					isMaster: true,
+					fork: function () {
+						self.called.push("fork");
+					},
+					on: function (event, fn) {
+						self.called.push("on " + event + " registered");
+						self.onDeadWorker = fn;
+					}
+				},
 				master: function () {
 					self.called.push("master");
 				},
@@ -137,8 +148,47 @@ describe("clusterFactory", function () {
 		it("should NOT have isMock setting", function () {
 			expect(this.cluster.isMock).to.be.undefined;
 		});
-		it("should call master callback for master cluster", function () {
-			expect(this.called).to.be.deep.equal(["master", "workforce"]);
+		it("should call master callbacks for master cluster", function () {
+			expect(this.called).to.be.deep.equal([
+				"master",
+				"fork",
+				"on exit registered",
+				"workforce"
+			]);
+		});
+		it("should restart a worker when one dies", function () {
+			this.called = [];
+			this.onDeadWorker({});
+			expect(this.called).to.be.deep.equal([
+				"fork"
+			]);
+		});
+	});
+
+	describe("clusterFactory with a cluster, worker process", function () {
+		beforeEach(function () {
+			var self = this;
+			self.called = [];
+			self.cluster = clusterFactory.init({
+				nocluster: "false",
+				mockCluster: { isMaster: false },
+				master: function () {
+					self.called.push("master");
+				},
+				workforce: function () {
+					self.called.push("workforce");
+				},
+				worker: function () {
+					self.called.push("worker");
+				}
+			});
+		});
+
+		it("should NOT have isMock setting", function () {
+			expect(this.cluster.isMock).to.be.undefined;
+		});
+		it("should call worker callback for worker cluster", function () {
+			expect(this.called).to.be.deep.equal(["worker"]);
 		});
 	});
 
